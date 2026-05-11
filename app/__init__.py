@@ -1,0 +1,1 @@
+"""GoodFirstFindr application package."""

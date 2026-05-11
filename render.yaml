@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: goodfirstfindr
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: llama-3.3-70b-versatile
+      - key: GMAIL_USER
+        sync: false
+      - key: GMAIL_APP_PASSWORD
+        sync: false
+      - key: RECIPIENT_EMAIL
+        sync: false
+      - key: DIGEST_TIME
+        value: "08:00"
+      - key: DIGEST_TIMEZONE
+        value: America/Phoenix
+      - key: DIGEST_KEYWORD
+        value: python machine learning
+      - key: SQLITE_PATH
+        value: data/goodfirstfindr.db

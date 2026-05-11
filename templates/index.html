@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GoodFirstFindr</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script>
+      window.GFF_SKILLS = {{ skills | tojson }};
+    </script>
+    <script defer src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="/static/app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="GoodFirstFindr home">
+        <span class="brand-mark">GF</span>
+        <span>GoodFirstFindr</span>
+      </a>
+      <div class="topbar-actions">
+        <button class="icon-button" id="refreshSavedButton" type="button" aria-label="Refresh saved issues" title="Refresh saved issues">
+          <i data-lucide="refresh-cw"></i>
+        </button>
+        <a class="icon-button" href="https://github.com/issues" target="_blank" rel="noreferrer" aria-label="Open GitHub issues" title="Open GitHub issues">
+          <i data-lucide="github"></i>
+        </a>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section class="search-band" aria-labelledby="searchTitle">
+        <div>
+          <p class="eyebrow">Skill profile</p>
+          <h1 id="searchTitle">ML-friendly first issues</h1>
+        </div>
+        <form class="search-form" id="searchForm">
+          <label class="field">
+            <span>Keyword or topic</span>
+            <input id="keywordInput" name="keyword" type="search" value="fastapi pytorch" autocomplete="off" maxlength="160" />
+          </label>
+          <label class="field limit-field">
+            <span>Limit</span>
+            <input id="limitInput" name="limit" type="number" min="1" max="25" value="10" />
+          </label>
+          <button class="primary-button" id="searchButton" type="submit">
+            <i data-lucide="search"></i>
+            <span>Search</span>
+          </button>
+        </form>
+      </section>
+
+      <section class="skill-strip" aria-label="Hardcoded skill profile">
+        {% for skill in skills %}
+        <span>{{ skill }}</span>
+        {% endfor %}
+      </section>
+
+      <div class="status-line" id="statusLine" role="status"></div>
+      <div class="error-box" id="errorBox" role="alert" hidden></div>
+
+      <section class="workspace">
+        <div class="results-area">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Ranked issues</p>
+              <h2>Matches</h2>
+            </div>
+            <button class="quiet-button" id="clearButton" type="button">
+              <i data-lucide="x"></i>
+              <span>Clear</span>
+            </button>
+          </div>
+          <div class="result-list" id="resultsList"></div>
+        </div>
+
+        <aside class="saved-area" aria-labelledby="savedTitle">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Local list</p>
+              <h2 id="savedTitle">Saved</h2>
+            </div>
+            <span class="saved-count" id="savedCount">0</span>
+          </div>
+          <div class="saved-list" id="savedList"></div>
+        </aside>
+      </section>
+    </main>
+
+    <template id="emptyTemplate">
+      <div class="empty-state">
+        <i data-lucide="search-code"></i>
+        <p>No issues loaded.</p>
+      </div>
+    </template>
+  </body>
+</html>
