@@ -31,6 +31,7 @@ class IssueRecommendation(BaseModel):
     score: float
     score_breakdown: ScoreBreakdown
     matched_skills: list[str] = Field(default_factory=list)
+    red_flags: list[str] = Field(default_factory=list)
     reason: str = ""
 
 
