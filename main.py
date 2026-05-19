@@ -19,20 +19,22 @@ from app.storage import SavedIssueStore
 
 logging.basicConfig(level=logging.INFO)
 
-store = SavedIssueStore(settings.sqlite_path)
+store = SavedIssueStore(settings.database_url)
 templates = Jinja2Templates(directory="templates")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    store.init()
-    scheduler = start_digest_scheduler(settings)
-    app.state.scheduler = scheduler
+    scheduler = None
     try:
+        store.init()
+        scheduler = start_digest_scheduler(settings)
+        app.state.scheduler = scheduler
         yield
     finally:
         if scheduler:
             scheduler.shutdown(wait=False)
+        store.close()
 
 
 app = FastAPI(title="GoodFirstFindr", version="1.0.0", lifespan=lifespan)

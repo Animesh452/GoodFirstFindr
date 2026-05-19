@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from pathlib import Path
 import os
 
 from dotenv import load_dotenv
@@ -43,7 +42,7 @@ class Settings:
     gmail_user: str | None = os.getenv("GMAIL_USER")
     gmail_app_password: str | None = os.getenv("GMAIL_APP_PASSWORD")
     recipient_email: str | None = os.getenv("RECIPIENT_EMAIL")
-    sqlite_path: Path = Path(os.getenv("SQLITE_PATH", "data/goodfirstfindr.db"))
+    database_url: str = os.getenv("DATABASE_URL", "")
     digest_enabled: bool = _get_bool("DIGEST_ENABLED", True)
     digest_keyword: str = os.getenv("DIGEST_KEYWORD", "python machine learning")
     digest_time: str = os.getenv("DIGEST_TIME", "08:00")
